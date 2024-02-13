@@ -1,15 +1,11 @@
 from rest_framework import generics, permissions
-from drf_api.permissions import IsCreatorOrReadOnly  
+from drf.permissions import IsCreatorOrReadOnly  
 from likes.models import Like
 from likes.serializers import LikeSerializer
-
-
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 # Create your views here.
-
-
 
 class LikeList(generics.ListCreateAPIView):
     """

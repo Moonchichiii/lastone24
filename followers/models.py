@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from profiles.models import Profile
 
 # Create your models here.
 
@@ -13,11 +14,9 @@ class Follower(models.Model):
     'unique_together' ensures a user can't 'double follow' the same user.
     """
     creator = models.ForeignKey(
-        User, related_name='following', on_delete=models.CASCADE
-    )
+        Profile, related_name='following', on_delete=models.CASCADE)
     followed = models.ForeignKey(
-        User, related_name='followed', on_delete=models.CASCADE
-    )
+        Profile, related_name='followers', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

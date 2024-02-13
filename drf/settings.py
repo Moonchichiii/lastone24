@@ -1,6 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
-from decouple import config
+from decouple import config, Csv
 import cloudinary
 import cloudinary_storage
 import dj_database_url
@@ -25,18 +25,28 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+#ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+
 
 # CSRF & CORS
-CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
 
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = False
 CSRF_COOKIE_HTTPONLY = False
-
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 # site id
 #SITE_ID = 1
+
+# security headers
+SECURE_BROWSER_XSS_FILTER = True
+
+X_FRAME_OPTIONS = 'DENY'
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
 
 
 
@@ -82,7 +92,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework',
     
-
+    'users',
     'profiles',
     'posts',
     'comments',

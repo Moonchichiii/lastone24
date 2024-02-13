@@ -1,7 +1,7 @@
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
-from drf.permissions import IsOwnerOrReadOnly
+from drf.permissions import IsCreatorOrReadOnly
 from .models import Post
 from .serializers import PostSerializer
 
@@ -52,7 +52,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     Retrieve a post and edit or delete it if you own it.
     """
     serializer_class = PostSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsCreatorOrReadOnly]
     queryset = Post.objects.annotate(
         likes_count=Count('likes', distinct=True),
         comments_count=Count('comments', distinct=True)
