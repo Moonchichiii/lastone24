@@ -21,35 +21,37 @@ CLOUDINARY_STORAGE = {
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# Allowed hosts
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-#ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
-
-# CSRF & CORS
-
+# CSRF and CORS 
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
+
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
 
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOW_CREDENTIALS = False
+# CSRF settings
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SECURE = False
 
+# True in production
+CSRF_COOKIE_SECURE = not DEBUG  
+
+# Session settings
+# True in production
+SESSION_COOKIE_SECURE = not DEBUG  
+
+# CORS settings
+CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_ALL_ORIGINS = False
+
+# Security headers
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
 # site id
 #SITE_ID = 1
-
-# security headers
-SECURE_BROWSER_XSS_FILTER = True
-
-X_FRAME_OPTIONS = 'DENY'
-
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
-
-
 
 
 REST_FRAMEWORK = {
