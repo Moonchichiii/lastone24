@@ -23,7 +23,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS')
+ALLOWED_HOSTS = ['*']
 
 
 # CSRF & CORS
@@ -72,8 +72,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.messages',
+    'django.contrib.messages',    
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
