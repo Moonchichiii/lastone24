@@ -1,6 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
-from decouple import config, Csv
+from decouple import config
 import cloudinary
 import cloudinary_storage
 import dj_database_url
@@ -25,22 +25,22 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 # Allowed hosts
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+#ALLOWED_HOSTS = config('ALLOWED_HOSTS')
+ALLOWED_HOSTS = ['*']
 
 # CSRF and CORS 
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
-
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
+CSRF_TRUSTED_ORIGINS = [config('CSRF_TRUSTED_ORIGINS')]
+CORS_ALLOWED_ORIGINS = [config('CORS_ALLOWED_ORIGINS')]
 
 # CSRF settings
 CSRF_COOKIE_HTTPONLY = False
 
 # True in production
-CSRF_COOKIE_SECURE = not DEBUG  
+CSRF_COOKIE_SECURE = False
 
 # Session settings
 # True in production
-SESSION_COOKIE_SECURE = not DEBUG  
+SESSION_COOKIE_SECURE = False
 
 # CORS settings
 CORS_ALLOW_CREDENTIALS = False
@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_simplejwt',
     'rest_framework',
+    'drf_standardized_errors',
     
     'users',
     'profiles',
