@@ -12,7 +12,9 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': config('CLOUDINARY_API_KEY'),
     'API_SECRET': config('CLOUDINARY_API_SECRET')
-}
+    }
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,12 +27,11 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 # Allowed hosts
-#ALLOWED_HOSTS = config('ALLOWED_HOSTS')
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS')
 
 # CSRF and CORS 
-CSRF_TRUSTED_ORIGINS = [config('CSRF_TRUSTED_ORIGINS')]
-CORS_ALLOWED_ORIGINS = [config('CORS_ALLOWED_ORIGINS')]
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS')
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS')
 
 # CSRF settings
 CSRF_COOKIE_HTTPONLY = False
@@ -146,7 +147,8 @@ DATABASES = {
     }
 }
 
-#DATABASES = {'default': dj_database_url.config(default=config('DATABASE_URL'))}
+print(DATABASES)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
