@@ -1,6 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
-from decouple import config
+from decouple import config, Csv
 import cloudinary
 import cloudinary_storage
 import dj_database_url
@@ -15,37 +15,40 @@ CLOUDINARY_STORAGE = {
     }
 
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config ('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
+
 
 # Allowed hosts
-ALLOWED_HOSTS = config('ALLOWED_HOSTS')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+
+
+
 
 # CSRF and CORS 
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS')
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS')
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
+
 
 # CSRF settings
-CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_HTTPONLY = True
 
 # True in production
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 
 # Session settings
 # True in production
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 
 # CORS settings
-CORS_ALLOW_CREDENTIALS = False
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Security headers
 SECURE_BROWSER_XSS_FILTER = True
@@ -62,8 +65,6 @@ REST_FRAMEWORK = {
      'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %Y',
@@ -89,12 +90,10 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
-    'corsheaders',
-    
+    'corsheaders',    
     'django_filters',
     'rest_framework_simplejwt',
-    'rest_framework',
-    'drf_standardized_errors',
+    'rest_framework',   
     
     'users',
     'profiles',
@@ -147,7 +146,7 @@ DATABASES = {
     }
 }
 
-print(DATABASES)
+
 
 
 # Password validation
