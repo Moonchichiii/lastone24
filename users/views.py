@@ -4,17 +4,19 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
 from rest_framework.views import APIView
-from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+
 
 from .serializers import UserRegistrationSerializer
 
+
+
+
+
 # Create your views here.
-
-
 
 class UserRegistrationView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
@@ -68,11 +70,11 @@ class LoginTokenObtainPairView(TokenObtainPairView):
         return response
 
 
-class LogoutView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        response = super().post(request)
-        response.delete_cookie('refresh', path='/token/refresh/')
-        response.delete_cookie('access', path='/')
+class LogoutView(APIView):    
+    
+    def post(self, request, *args, **kwargs):
+        response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+        response.delete_cookie('refresh', path='/token/refresh/')        
+        response.delete_cookie('access', path='/')        
         return response
+        
