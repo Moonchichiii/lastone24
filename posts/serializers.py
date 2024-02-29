@@ -4,7 +4,7 @@ from likes.models import Like
 
 
 class PostSerializer(serializers.ModelSerializer):
-    creator = serializers.ReadOnlyField(source='creator.username')
+    creator = serializers.ReadOnlyField(source='creator.user.username')
     is_creator = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='creator.profile.id')
     profile_image = serializers.ReadOnlyField(source='creator.profile.image.url')
@@ -22,8 +22,9 @@ class PostSerializer(serializers.ModelSerializer):
         return value
 
     def get_is_creator(self, obj):
-        request = self.context['request']
-        return request.user == obj.creator
+        request = self.context.get('request', None)
+        return request and request.user == obj.creator
+
 
     def get_like_id(self, obj):
         user = self.context['request'].user
@@ -36,9 +37,8 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = [
-            'id', 'creator', 'is_creator', 'profile_id',
-            'profile_image', 'created_at', 'updated_at',
-            'title', 'content', 'image', 'image_filter',
-            'like_id', 'likes_count', 'comments_count',
-        ]
+        fields = ['id', 'creator', 'is_creator',
+                  'profile_id', 'profile_image', 
+                  'title', 'image', 'like_id', 'likes_count',
+                  'comments_count', 'created_at', 'updated_at']
+        read_only_fields = ['creator']

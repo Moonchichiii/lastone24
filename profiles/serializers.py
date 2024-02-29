@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import Profile
 from followers.models import Follower
 
-
 class ProfileSerializer(serializers.ModelSerializer):
     creator = serializers.ReadOnlyField(source='creator.username')
     is_creator = serializers.SerializerMethodField()
@@ -18,8 +17,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_following_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
+            user_profile = user.profile
             following = Follower.objects.filter(
-                creator=user, followed=obj.creator
+                creator=user_profile, followed=obj
             ).first()
             return following.id if following else None
         return None

@@ -241,7 +241,7 @@ The deployment involves the following steps:
 
 - [https://stackedit.io](https://stackedit.io/)
 - [https://django-rest-framework-simplejwt.readthedocs.io/_/downloads/en/latest/pdf/] (DRF Simple jwt docs)
-
+- [https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies] (Cookies to cookies)
 
 [Back to top](#table-of-contents)
 

@@ -2,7 +2,7 @@ from django.db.models import Count
 from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 from .models import Profile
 from .serializers import ProfileSerializer
@@ -12,8 +12,7 @@ from drf.permissions import IsCreatorOrReadOnly
 # Create your views here.
 
 
-class ProfileList(generics.ListAPIView):
-    authentication_classes = [JWTAuthentication]
+class ProfileList(generics.ListAPIView):    
     permission_classes = [IsAuthenticatedOrReadOnly]
     """
     List all profiles.
