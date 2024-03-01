@@ -1,6 +1,6 @@
 
 from django.db import models
-from django.contrib.auth.models import User
+from profiles.models import Profile
 from posts.models import Post
 
 
@@ -13,7 +13,7 @@ class Like(models.Model):
     'creator' is a User instance and 'post' is a Post instance.
     'unique_together' ensures a user can't like the same post twice.
     """
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes_created')
+    creator = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='likes_created')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
     created_at = models.DateTimeField(auto_now_add=True)
 

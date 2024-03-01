@@ -29,11 +29,13 @@ class PostSerializer(serializers.ModelSerializer):
     def get_like_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
+            profile = user.profile
             like = Like.objects.filter(
-                creator=user, post=obj
-            ).first()
+            creator=profile, post=obj
+        ).first()
             return like.id if like else None
         return None
+
 
     class Meta:
         model = Post

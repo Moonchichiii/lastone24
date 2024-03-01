@@ -26,7 +26,7 @@ class ProfileList(generics.ListAPIView):
     serializer_class = ProfileSerializer
     filter_backends = [filters.OrderingFilter, DjangoFilterBackend]    
     
-    filterset_fields = ['name', 'creator__username', 'created_at'] 
+    filterset_fields = ['creator__username', 'created_at'] 
     ordering_fields = ['posts_count', 'followers_count', 'following_count', 'created_at']
 
 

@@ -4,10 +4,6 @@ from drf.permissions import IsCreatorOrReadOnly
 from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 
-
-from rest_framework_simplejwt.authentication import JWTAuthentication
-
-
 # Create your views here.
 
 class CommentList(generics.ListCreateAPIView):
@@ -21,7 +17,8 @@ class CommentList(generics.ListCreateAPIView):
     filterset_fields = ['post']
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        profile = self.request.user.profile
+        serializer.save(creator=profile)
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):

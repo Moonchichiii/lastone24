@@ -2,7 +2,7 @@ from rest_framework import generics, permissions
 from drf.permissions import IsCreatorOrReadOnly  
 from likes.models import Like
 from likes.serializers import LikeSerializer
-from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 
 # Create your views here.
@@ -16,7 +16,9 @@ class LikeList(generics.ListCreateAPIView):
     queryset = Like.objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)  
+        profile = self.request.user.profile
+        serializer.save(creator=profile)
+
 
 class LikeDetail(generics.RetrieveDestroyAPIView):
     """

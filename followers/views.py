@@ -3,12 +3,8 @@ from drf.permissions import IsCreatorOrReadOnly
 from .models import Follower
 from .serializers import FollowerSerializer
 
-from rest_framework_simplejwt.authentication import JWTAuthentication
-
-
 
 # Create your views here.
-
 
 class FollowerList(generics.ListCreateAPIView):
     """
@@ -22,7 +18,7 @@ class FollowerList(generics.ListCreateAPIView):
     serializer_class = FollowerSerializer
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user) 
+        serializer.save(creator=self.request.user.profile)
 
 class FollowerDetail(generics.RetrieveDestroyAPIView):
     """
