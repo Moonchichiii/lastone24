@@ -23,7 +23,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_is_creator(self, obj):
         request = self.context.get('request', None)
-        return request and request.user == obj.creator
+        if request and hasattr(request.user, 'profile'):
+            return obj.creator == request.user.profile
+        return False
 
 
     def get_like_id(self, obj):

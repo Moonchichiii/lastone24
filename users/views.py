@@ -23,9 +23,9 @@ class UserRegistrationView(generics.CreateAPIView):
 
         response = Response(status=status.HTTP_201_CREATED)
         response.set_cookie('refresh', str(refresh), httponly=True,
-                            path='/token/refresh/', samesite='Lax', secure=True)
+                            path='/token/refresh/', samesite='Lax', secure=True, max_age=3600 * 24 * 14)
         response.set_cookie('access', str(refresh.access_token),
-                            httponly=True, path='/', samesite='Lax', secure=True)
+                            httponly=True, path='/', samesite='Lax', secure=True, max_age=3600 * 24 * 14)
         return response
 
 
