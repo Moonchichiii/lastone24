@@ -111,10 +111,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
-
 if DEBUG:
-    MIDDLEWARE.insert(3, 'django.contrib.sessions.middleware.SessionMiddleware') 
+    MIDDLEWARE.insert(3, 'django.contrib.sessions.middleware.SessionMiddleware')
+
+
 
 ROOT_URLCONF = 'drf.urls'
 
