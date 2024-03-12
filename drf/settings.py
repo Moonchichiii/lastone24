@@ -40,9 +40,9 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
 CORS_ALLOW_CREDENTIALS = True  
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
 
-# CSRF Cookie settings
-CSRF_COOKIE_SECURE = not DEBUG
-CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
+# # CSRF Cookie settings
+# CSRF_COOKIE_SECURE = not DEBUG
+# CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
 
 # Restframe_work settings... 
 REST_FRAMEWORK = {
@@ -64,7 +64,8 @@ REST_FRAMEWORK = {
 }
 
 # JWT settings
-SIMPLE_JWT = {
+
+SIMPLE_JWT = {    
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_COOKIE': 'my-access', 
