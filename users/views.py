@@ -26,7 +26,6 @@ class UserRegistrationView(generics.CreateAPIView):
                     path='/token/refresh/', samesite='None', secure=True, max_age=3600 * 24 * 14)
         response.set_cookie('access', str(refresh.access_token),
                     httponly=True, path='/', samesite='None', secure=True, max_age=3600 * 24 * 14)
-
         return response
 
 
@@ -35,9 +34,10 @@ class LoginTokenObtainPairView(TokenObtainPairView):
         response = super().post(request, *args, **kwargs)
         refresh = RefreshToken.for_user(request.user)
         response.set_cookie('refresh', str(refresh), httponly=True,
-                            path='/token/refresh/', samesite='None', secure=True, max_age=3600 * 24 * 14)
-        response.set_cookie('access', str(refresh.access_token), httponly=True,
-                            path='/', samesite='None', secure=True, max_age=3600 * 24 * 14)
+                    path='/token/refresh/', samesite='None', secure=True, max_age=3600 * 24 * 14)
+        response.set_cookie('access', str(refresh.access_token),
+                    httponly=True, path='/', samesite='None', secure=True, max_age=3600 * 24 * 14)
+
         return response
 
 
