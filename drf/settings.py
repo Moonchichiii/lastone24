@@ -30,10 +30,10 @@ DEBUG = False
 # Allowed hosts
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-# Security headers
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_CONTENT_TYPE_NOSNIFF = True
+# # Security headers
+# SECURE_BROWSER_XSS_FILTER = True
+# X_FRAME_OPTIONS = 'DENY'
+# SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # CSRF and CORS
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
@@ -41,8 +41,8 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
 
 # # CSRF Cookie settings
-# CSRF_COOKIE_SECURE = not DEBUG
-# CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
 
 # Restframe_work settings... 
 REST_FRAMEWORK = {
