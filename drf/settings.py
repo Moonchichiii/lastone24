@@ -27,36 +27,28 @@ SECRET_KEY = config ('SECRET_KEY')
 DEBUG = False
 
 
-
 # Allowed hosts
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
 
 # Security headers
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-
-
 # CSRF and CORS
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True  
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
 
-
-
+# CSRF Cookie settings
 CSRF_COOKIE_SECURE = True  
-CSRF_COOKIE_SAMESITE = 'None'  
-
-
-
-
+CSRF_COOKIE_SAMESITE = 'Lax'  
 
 # JWT settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -66,18 +58,16 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%d %b %Y',
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-    ] if not DEBUG else [],
+    ],
 }
 
-# JWT settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'AUTH_COOKIE': 'access',  
-    'AUTH_COOKIE_HTTP_ONLY': True,  
-    'AUTH_COOKIE_SECURE': True,  
+    'AUTH_COOKIE': 'my-access', 
+    'AUTH_COOKIE_HTTP_ONLY': True,
+    'AUTH_COOKIE_SECURE': True,
 }
-
 
 # Application definition
 
