@@ -48,6 +48,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 CSRF_TRUSTED_ORIGINS="https://lastfrontend5-946e679fc7c6.herokuapp.com"
 CORS_ALLOWED_ORIGINS="https://lastfrontend5-946e679fc7c6.herokuapp.com"
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 
