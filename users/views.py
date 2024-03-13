@@ -24,7 +24,7 @@ class UserRegistrationView(generics.CreateAPIView):
         response = Response(status=status.HTTP_201_CREATED)
         response.set_cookie('refresh', str(refresh), httponly=True,
                             path='/token/refresh/', samesite='None', secure=True, max_age=3600 * 24 * 14)
-        response.set_cookie('my-access', str(refresh.access_token), httponly=True,
+        response.set_cookie('access', str(refresh.access_token), httponly=True,
                             path='/', samesite='None', secure=True, max_age=3600 * 24 * 14)
 
         return response
@@ -36,7 +36,7 @@ class LoginTokenObtainPairView(TokenObtainPairView):
         refresh = RefreshToken.for_user(request.user)
         response.set_cookie('refresh', str(refresh), httponly=True,
                             path='/token/refresh/', samesite='None', secure=True, max_age=3600 * 24 * 14)
-        response.set_cookie('my-access', str(refresh.access_token), httponly=True,
+        response.set_cookie('access', str(refresh.access_token), httponly=True,
                             path='/', samesite='None', secure=True, max_age=3600 * 24 * 14)
 
         return response
@@ -47,5 +47,5 @@ class LogoutView(APIView):
         response = JsonResponse(
             {"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
         response.delete_cookie('refresh', path='/token/refresh/')
-        response.delete_cookie('my-access', path='/')
+        response.delete_cookie('access', path='/')
         return response
