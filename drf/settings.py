@@ -27,11 +27,16 @@ SECRET_KEY = config ('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # ALLOWED_HOSTS
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,[::1]', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=Csv())
+
 
 # CORS headers
+
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5173', cast=Csv())
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:5173', cast=Csv())
+
+
+CORS_ALLOW_CREDENTIALS = True  
+#CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 
 #  security settings 
 
@@ -48,9 +53,9 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:
 
 # JWT Authentication settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'AUTH_COOKIE': 'access',
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5 if DEBUG else 30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1 if DEBUG else 14),
+    'AUTH_COOKIE': 'jwt_access',
     # 'AUTH_COOKIE_DOMAIN': config('AUTH_COOKIE_DOMAIN', default=None),  
     'AUTH_COOKIE_SECURE': config('AUTH_COOKIE_SECURE', default=False, cast=bool),
     'AUTH_COOKIE_HTTP_ONLY': True,
