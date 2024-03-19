@@ -24,50 +24,58 @@ SECRET_KEY = config ('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-# ALLOWED_HOSTS 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+# ALLOWED_HOSTS
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,[::1]', cast=Csv())
 
-# Security settings
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SESSION_COOKIE_SECURE = True  
-SESSION_COOKIE_SAMESITE = 'None'  
+# CORS headers
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5173', cast=Csv())
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:5173', cast=Csv())
+
+#  security settings 
+
+# SECURE_BROWSER_XSS_FILTER = config('SECURE_BROWSER_XSS_FILTER', default=False, cast=bool)
+# X_FRAME_OPTIONS = config('X_FRAME_OPTIONS', default='SAMEORIGIN')
+# SECURE_CONTENT_TYPE_NOSNIFF = config('SECURE_CONTENT_TYPE_NOSNIFF', default=False, cast=bool)
+# SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=False, cast=bool)
+# SESSION_COOKIE_SAMESITE = config('SESSION_COOKIE_SAMESITE', default='Lax')
 
 # CSRF settings
-CSRF_COOKIE_SECURE = True  
-CSRF_COOKIE_HTTP_ONLY = True  
-CSRF_COOKIE_SAMESITE = 'Lax'  
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
-
-# CORS settings
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
-CORS_ALLOW_CREDENTIALS = True  
-CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"] 
+# CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=False, cast=bool)
+# CSRF_COOKIE_HTTP_ONLY = config('CSRF_COOKIE_HTTP_ONLY', default=True, cast=bool)
+# CSRF_COOKIE_SAMESITE = config('CSRF_COOKIE_SAMESITE', default='Lax')
 
 # JWT Authentication settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_COOKIE': 'access',
-    'AUTH_COOKIE_DOMAIN': None,  
-    'AUTH_COOKIE_SECURE': True,
+    # 'AUTH_COOKIE_DOMAIN': config('AUTH_COOKIE_DOMAIN', default=None),  
+    'AUTH_COOKIE_SECURE': config('AUTH_COOKIE_SECURE', default=False, cast=bool),
     'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_PATH': '/',
-    'AUTH_COOKIE_SAMESITE': 'None',  
+    'AUTH_COOKIE_SAMESITE': config('AUTH_COOKIE_SAMESITE', default='Lax'),
 }
 
-# Rest Framework settings
+#Rest Framework settings
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication'],
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DATETIME_FORMAT': '%d %b %Y',
-    'DEFAULT_RENDERER_CLASSES': ['rest_framework.renderers.JSONRenderer']
-        if not DEBUG else ['rest_framework.renderers.BrowsableAPIRenderer', 'rest_framework.renderers.JSONRenderer'],
+'DEFAULT_AUTHENTICATION_CLASSES': [
+'rest_framework_simplejwt.authentication.JWTAuthentication'
+],
+'DEFAULT_PERMISSION_CLASSES': [
+'rest_framework.permissions.AllowAny'
+],
+'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+'PAGE_SIZE': config('PAGE_SIZE', default=10, cast=int),
+'DATETIME_FORMAT': '%d %b %Y',
+'DEFAULT_RENDERER_CLASSES': (
+['rest_framework.renderers.JSONRenderer'] if not DEBUG
+else [
+'rest_framework.renderers.BrowsableAPIRenderer',
+'rest_framework.renderers.JSONRenderer'
+]
+),
 }
 
 
@@ -133,16 +141,11 @@ WSGI_APPLICATION = 'drf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASES = {'default': dj_database_url.config(default=config('DATABASE_URL'))}
-
-
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default=f'sqlite:///{BASE_DIR}/db.sqlite3')
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
