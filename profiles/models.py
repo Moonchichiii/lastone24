@@ -10,9 +10,11 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)    
     image = models.ImageField(
-        upload_to='images/', default='../default_profile_qdjgyp'
-    )
+    upload_to='media/', default='Defaultprofile_tvf0tm.png'
+)
 
+    
+    
     class Meta:
         ordering = ['-created_at']
 
