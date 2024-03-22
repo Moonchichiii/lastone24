@@ -13,7 +13,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     ingredients = models.TextField(blank=True, null=True)
     recipe = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='images/', default='7190932_ugiaz9.png', blank=True)
+    image = models.ImageField(upload_to='images/', blank=False)
     image_url = models.URLField(blank=True, null=True)  
     published = models.BooleanField(default=False)
     time = models.IntegerField(default=0)  

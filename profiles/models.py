@@ -10,7 +10,7 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)    
     image = models.ImageField(
-    upload_to='media/', default='Defaultprofile_tvf0tm.png'
+    upload_to='media/', default='7190932_mcpghm'
 )
 
     
